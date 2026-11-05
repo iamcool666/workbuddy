@@ -1,0 +1,26 @@
+name: WorkBuddy Daily Sign
+
+on:
+  schedule:
+    - cron: '30 0 * * *'  # 北京时间 8:30 自动运行
+  workflow_dispatch:
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Checkin
+        env:
+          WORKBUDDY_TOKEN: ${{ secrets.WORKBUDDY_TOKEN }}
+          WORKBUDDY_TOKEN_JSON: ${{ secrets.WORKBUDDY_TOKEN_JSON }}
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+        run: |
+          python script/workbuddy/main.py
