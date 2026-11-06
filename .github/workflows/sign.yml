@@ -17,10 +17,14 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install Dependencies
+        run: pip install pynacl
+
       - name: Run Checkin
         env:
           WORKBUDDY_TOKEN: ${{ secrets.WORKBUDDY_TOKEN }}
           WORKBUDDY_TOKEN_JSON: ${{ secrets.WORKBUDDY_TOKEN_JSON }}
           SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # 用于刷新 token 后回写 Secret（可选，见 README）
         run: |
           python script/workbuddy/main.py
