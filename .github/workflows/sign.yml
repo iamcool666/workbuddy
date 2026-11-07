@@ -2,7 +2,7 @@ name: WorkBuddy Daily Sign
 
 on:
   schedule:
-    - cron: '17 */1 * * *'  # 北京时间 8:30 自动运行
+    - cron: '17 2 * * *'  # 北京时间 8:30 自动运行
   workflow_dispatch:
 
 jobs:
