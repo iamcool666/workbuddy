@@ -2,7 +2,7 @@
 自动签到、消息推送、token自动续期
 
 ## 功能
-- 每天北京时间 8:30 自动签到（GitHub Actions 定时任务）
+- 每天北京时间 06:17（UTC 22:17）自动签到（GitHub Actions 定时任务）
 - Access Token 过期时自动用 refresh_token 续期
 - **Token 刷新后自动回写 GitHub Secret**（需配置 `PAT_TOKEN`，见下）
 - 签到结果推送到微信（Server酱，可选）
