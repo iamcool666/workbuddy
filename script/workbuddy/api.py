@@ -22,11 +22,26 @@ def http_post(url, headers, payload=None):
         return 500, {"code": 500, "message": str(e)}
 
 def refresh_access_token(refresh_token):
-    headers = {"Content-Type": "application/json"}
-    payload = {"refresh_token": refresh_token}
-    code, resp = http_post(REFRESH_TOKEN_URL, headers, payload)
+    """刷新 access token。
+
+    实测该接口的 refresh token 通过请求头 X-Refresh-Token 传递（body 为空），
+    返回字段为 camelCase：accessToken / refreshToken / expiresIn / refreshExpiresIn。
+    这里统一转成 snake_case 交给上层使用。
+    """
+    headers = {
+        "Content-Type": "application/json",
+        "X-Refresh-Token": refresh_token,
+        "X-Auth-Refresh-Source": "plugin",
+    }
+    code, resp = http_post(REFRESH_TOKEN_URL, headers, {})
     if code == 200 and resp.get("code") == 0:
-        return True, resp.get("data", {})
+        data = resp.get("data") or {}
+        return True, {
+            "access_token": data.get("accessToken") or data.get("access_token"),
+            "refresh_token": data.get("refreshToken") or data.get("refresh_token"),
+            "expires_in": data.get("expiresIn"),
+            "refresh_expires_in": data.get("refreshExpiresIn"),
+        }
     return False, resp
 
 def get_checkin_status(access_token, uid=""):

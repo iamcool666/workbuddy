@@ -44,7 +44,8 @@ def run_account(account):
                 print("✅ Token 刷新成功！")
                 code, resp = api.get_checkin_status(token, uid)
             else:
-                return f"❌ 账号 [{name}] Token 刷新失败，请重新抓取。", False
+                reason = ref_data.get("msg") or ref_data.get("message") or "未知错误"
+                return f"❌ 账号 [{name}] Token 刷新失败({reason})，请重新抓取。", False
         else:
             return f"❌ 账号 [{name}] Token 已失效，且未提供 refresh_token。", False
 
