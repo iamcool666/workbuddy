@@ -3,8 +3,6 @@ name: WorkBuddy Daily Sign
 on:
   schedule:
     - cron: '17 2 * * *'   # 北京时间每天上午 10:17 运行
-    - cron: '45 7 * * *'   # 北京时间每天下午 3:45 运行
-    - cron: '21 13 * * *'  # 北京时间每天晚上 9:21 运行
   workflow_dispatch:
 
 jobs:
